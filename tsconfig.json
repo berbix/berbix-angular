@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "berbix": [
+        "dist/berbix"
+      ],
+      "berbix/*": [
+        "dist/berbix/*"
+      ]
+    }
   }
 }

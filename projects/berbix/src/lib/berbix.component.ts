@@ -29,6 +29,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
   @Input() email: string;
   @Input() phone: string;
   @Input() continuation: string;
+  @Input() clientToken: string;
 
   @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
   @Output() flowError = new EventEmitter<object>();
@@ -105,10 +106,11 @@ export class BerbixComponent implements OnInit, OnDestroy {
   }
 
   getFrameUrl() {
-    const { overrideUrl, version, clientId, role, email, phone, continuation } = this;
+    const { overrideUrl, version, clientId, role, email, phone, continuation, clientToken } = this;
     if (overrideUrl != null) {
       return overrideUrl;
     }
+    const token = clientToken || continuation;
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       (this.getBaseUrl() + '/' + version + '/verify') +
       ('?client_id=' + clientId) +
@@ -116,7 +118,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
       ('&i=' + this.idx) +
       (email ? '&email=' + encodeURIComponent(email) : '') +
       (phone ? '&phone=' + encodeURIComponent(phone) : '') +
-      (continuation ? '&continuation=' + continuation : ''));
+      (token ? '&client_token=' + token : ''));
   }
 
   frameStyles() {

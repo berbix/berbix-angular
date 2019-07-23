@@ -40,7 +40,7 @@ Now you can use the `lib-berbix` component in your templates.
 ```
 <lib-berbix
   clientId="your_client_id"
-  role="your_role_key"
+  templateKey="your_template_key"
   environment="production"
   (flowDisplayed)="display()"
   (flowCompleted)="complete($event)"
@@ -50,17 +50,17 @@ Now you can use the `lib-berbix` component in your templates.
 ### Full list of props
 
 ```js
+// Required
 @Input() clientId: string;
-@Input() role: string;
-@Input() baseUrl: string;
-@Input() environment: string;
-@Input() overrideUrl: string;
-@Input() version = 'v0';
+
+// Optional
+@Input() templateKey: string;
+@Input() clientToken: string;
 @Input() email: string;
 @Input() phone: string;
-@Input() continuation: string;
-@Input() clientToken: string;
+@Input() environment: string;
 
+// Event emitters
 @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
 @Output() flowError = new EventEmitter<object>();
 @Output() flowDisplayed = new EventEmitter<any>();

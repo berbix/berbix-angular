@@ -40,7 +40,7 @@ Now you can use the `lib-berbix` component in your templates.
 ```
 <lib-berbix
   clientId="your_client_id"
-  templateKey="your_template_key"
+  clientToken="your_client_token"
   environment="production"
   (flowDisplayed)="display()"
   (flowCompleted)="complete($event)"
@@ -54,8 +54,8 @@ Now you can use the `lib-berbix` component in your templates.
 @Input() clientId: string;
 
 // Optional
-@Input() templateKey: string;
 @Input() clientToken: string;
+@Input() templateKey: string;
 @Input() email: string;
 @Input() phone: string;
 @Input() environment: string;

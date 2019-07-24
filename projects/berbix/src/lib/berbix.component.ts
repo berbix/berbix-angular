@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+const SDK_VERSION = '0.0.3';
+
 export interface FlowCompletedEvent {
   code: string;
 }
@@ -116,11 +118,12 @@ export class BerbixComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       (this.getBaseUrl() + '/' + version + '/verify') +
       ('?client_id=' + clientId) +
-      ('&template=' + template) +
+      (template ? '&template=' + template : '') +
       ('&i=' + this.idx) +
       (email ? '&email=' + encodeURIComponent(email) : '') +
       (phone ? '&phone=' + encodeURIComponent(phone) : '') +
-      (token ? '&client_token=' + token : ''));
+      (token ? '&client_token=' + token : '') +
+      ('&sdk=BerbixAngular-' + SDK_VERSION));
   }
 
   frameStyles() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-const SDK_VERSION = '0.0.3';
+const SDK_VERSION = '0.0.4';
 
 export interface FlowCompletedEvent {
   code: string;

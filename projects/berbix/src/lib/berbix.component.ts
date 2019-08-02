@@ -16,6 +16,7 @@ export interface FlowCompletedEvent {
       [ngStyle]="frameStyles()"
       allow="camera"
       scrolling="no"
+      referrerpolicy="no-referrer-when-downgrade"
     >
     </iframe>
   `,
@@ -90,6 +91,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
       flowStateChange.emit(data.payload);
     } else if (data.type === 'ERROR_RENDERED') {
       flowError.emit(data.payload);
+      this.height = 200;
     }
   }
 

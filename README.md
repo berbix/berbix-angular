@@ -52,10 +52,9 @@ Now you can use the `lib-berbix` component in your templates.
 ```js
 // Required
 @Input() clientId: string;
+@Input() clientToken: string;
 
 // Optional
-@Input() clientToken: string;
-@Input() templateKey: string;
 @Input() email: string;
 @Input() phone: string;
 @Input() environment: string;

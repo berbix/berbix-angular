@@ -117,15 +117,24 @@ export class BerbixComponent implements OnInit, OnDestroy {
     }
     const token = clientToken || continuation;
     const template = templateKey || role;
+    var options = ['sdk=BerbixAngular-' + SDK_VERSION];
+    if (clientId) {
+      options.push('client_id=' + clientId);
+    }
+    if (template) {
+      options.push('template=' + template);
+    }
+    if (email) {
+      options.push('email=' + encodeURIComponent(email));
+    }
+    if (phone) {
+      options.push('phone=' + encodeURIComponent(phone));
+    }
+    if (token) {
+      options.push('client_token=' + token);
+    }
     return this.sanitizer.bypassSecurityTrustResourceUrl(
-      (this.getBaseUrl() + '/' + version + '/verify') +
-      ('?client_id=' + clientId) +
-      (template ? '&template=' + template : '') +
-      ('&i=' + this.idx) +
-      (email ? '&email=' + encodeURIComponent(email) : '') +
-      (phone ? '&phone=' + encodeURIComponent(phone) : '') +
-      (token ? '&client_token=' + token : '') +
-      ('&sdk=BerbixAngular-' + SDK_VERSION));
+      (this.getBaseUrl() + '/' + version + '/verify?') + options.join('&'));
   }
 
   frameStyles() {

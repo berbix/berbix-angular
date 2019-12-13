@@ -30,10 +30,10 @@ export class BerbixComponent implements OnInit, OnDestroy {
   @Input() environment: string;
   @Input() overrideUrl: string;
   @Input() version = 'v0';
-  @Input() email: string;
-  @Input() phone: string;
   @Input() continuation: string;
   @Input() clientToken: string;
+  @Input() email: string; // deprecated, do not use
+  @Input() phone: string; // deprecated, do not use
 
   @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
   @Output() flowError = new EventEmitter<object>();

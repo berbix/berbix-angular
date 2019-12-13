@@ -45,10 +45,6 @@ Now you can use the `lib-berbix` component in your templates.
 // Required
 @Input() clientToken: string;
 
-// Optional
-@Input() email: string;
-@Input() phone: string;
-
 // Event emitters
 @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
 @Output() flowError = new EventEmitter<object>();

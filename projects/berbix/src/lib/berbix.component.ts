@@ -49,6 +49,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
 
   show = true;
   height = 0;
+  marginTop = 0;
   idx = 0;
   frameUrl: SafeResourceUrl;
 
@@ -89,6 +90,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
     } else if (data.type === "DISPLAY_IFRAME") {
       flowDisplayed.emit(null);
       this.height = data.payload.height;
+      this.marginTop = data.payload.margin || 0;
     } else if (data.type === "RESIZE_IFRAME") {
       this.height = data.payload.height;
     } else if (data.type === "RELOAD_IFRAME") {
@@ -150,6 +152,11 @@ export class BerbixComponent implements OnInit, OnDestroy {
     if (token) {
       options.push("client_token=" + token);
     }
+    const height = Math.max(
+      document.documentElement.clientHeight,
+      window.innerHeight || 0
+    );
+    options.push("max_height=" + height);
     return this.sanitizer.bypassSecurityTrustResourceUrl(
       this.getBaseUrl() + "/" + version + "/verify?" + options.join("&")
     );
@@ -164,6 +171,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
       display: "block",
       width: "100%",
       height: this.height + "px",
+      marginTop: this.marginTop + "px",
       overflow: "hidden",
     };
   }

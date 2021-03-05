@@ -9,11 +9,6 @@ import {
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 
 const SDK_VERSION = "0.0.8";
-
-export interface FlowCompletedEvent {
-  code: string;
-}
-
 @Component({
   selector: "lib-berbix",
   template: `
@@ -44,16 +39,15 @@ export class BerbixComponent implements OnInit, OnDestroy {
   @Input() baseUrl: string;
   @Input() overrideUrl: string;
   @Input() version = "v0";
-  @Input() continuation: string;
   @Input() clientToken: string;
   @Input() showInModal: boolean;
   @Input() showCloseModalButton: boolean;
 
-  @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
+  @Output() flowCompleted = new EventEmitter<void>();
   @Output() flowError = new EventEmitter<object>();
-  @Output() flowDisplayed = new EventEmitter<any>();
+  @Output() flowDisplayed = new EventEmitter<void>();
   @Output() flowStateChange = new EventEmitter<object>();
-  @Output() flowExit = new EventEmitter<any>();
+  @Output() flowExit = new EventEmitter<void>();
 
   show = true;
   height = 0;
@@ -93,7 +87,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
     if (data.type === "VERIFICATION_COMPLETE") {
       try {
         if (data.payload.success) {
-          flowCompleted.emit({ code: data.payload.code });
+          flowCompleted.emit(null);
         } else {
           flowError.emit(data);
         }
@@ -132,7 +126,6 @@ export class BerbixComponent implements OnInit, OnDestroy {
     const {
       overrideUrl,
       version,
-      continuation,
       clientToken,
       showInModal,
       showCloseModalButton,
@@ -140,7 +133,7 @@ export class BerbixComponent implements OnInit, OnDestroy {
     if (overrideUrl != null) {
       return overrideUrl;
     }
-    const token = clientToken || continuation;
+    const token = clientToken;
     var options = ["sdk=BerbixAngular-" + SDK_VERSION];
     if (token) {
       options.push("client_token=" + token);

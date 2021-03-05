@@ -26,5 +26,6 @@
         "dist/berbix/*"
       ]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

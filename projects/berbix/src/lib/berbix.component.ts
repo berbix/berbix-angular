@@ -17,12 +17,12 @@ export interface FlowCompletedEvent {
 @Component({
   selector: "lib-berbix",
   template: `
-    <ng-container [ngIf]="show">
+    <ng-container *ngIf="show">
       <div *ngIf="showInModal; else frameTpl">
-        [ngStyle]="outerDivStyles()"
-        <div>
-          [ngStyle]="innerDivStyles()"
-          <ng-container *ngTemplateOutlet="frameTpl"></ng-container>
+        <div [ngStyle]="outerDivStyles()">
+          <div [ngStyle]="innerDivStyles()">
+            <ng-container *ngTemplateOutlet="frameTpl"></ng-container>
+          </div>
         </div>
       </div>
     </ng-container>
@@ -41,18 +41,13 @@ export interface FlowCompletedEvent {
   styles: [],
 })
 export class BerbixComponent implements OnInit, OnDestroy {
-  @Input() clientId: string;
-  @Input() role: string;
-  @Input() templateKey: string;
   @Input() baseUrl: string;
-  @Input() environment: string;
   @Input() overrideUrl: string;
   @Input() version = "v0";
   @Input() continuation: string;
   @Input() clientToken: string;
   @Input() showInModal: boolean;
-  @Input() email: string; // deprecated, do not use
-  @Input() phone: string; // deprecated, do not use
+  @Input() showCloseModalButton: boolean;
 
   @Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
   @Output() flowError = new EventEmitter<object>();
@@ -126,56 +121,36 @@ export class BerbixComponent implements OnInit, OnDestroy {
   };
 
   getBaseUrl() {
-    const { baseUrl, environment } = this;
+    const { baseUrl } = this;
     if (baseUrl != null) {
       return baseUrl;
     }
-    switch (environment) {
-      case "sandbox":
-        return "https://verify.sandbox.berbix.com";
-      case "staging":
-        return "https://verify.staging.berbix.com";
-      default:
-        return "https://verify.berbix.com";
-    }
+    return "https://verify.berbix.com";
   }
 
   getFrameUrl() {
     const {
       overrideUrl,
       version,
-      clientId,
-      role,
-      templateKey,
-      email,
-      phone,
       continuation,
       clientToken,
       showInModal,
+      showCloseModalButton,
     } = this;
     if (overrideUrl != null) {
       return overrideUrl;
     }
     const token = clientToken || continuation;
-    const template = templateKey || role;
     var options = ["sdk=BerbixAngular-" + SDK_VERSION];
-    if (clientId) {
-      options.push("client_id=" + clientId);
-    }
-    if (template) {
-      options.push("template=" + template);
-    }
-    if (email) {
-      options.push("email=" + encodeURIComponent(email));
-    }
-    if (phone) {
-      options.push("phone=" + encodeURIComponent(phone));
-    }
     if (token) {
       options.push("client_token=" + token);
     }
     if (showInModal) {
-      options.push("modal=true");
+      if (!showCloseModalButton) {
+        options.push("modal=1");
+      } else {
+        options.push("modal=2");
+      }
     }
     const height = Math.max(
       document.documentElement.clientHeight,

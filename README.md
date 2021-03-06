@@ -24,7 +24,7 @@ import { BerbixComponent } from "berbix-angular";
   declarations: [AppComponent, BerbixComponent],
   imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 ```
@@ -45,11 +45,16 @@ Now you can use the `lib-berbix` component in your templates.
 // Required
 @Input() clientToken: string;
 
+// Optional
+@Input() showInModal: boolean;
+@Input() showCloseModalButton: boolean;
+
 // Event emitters
-@Output() flowCompleted = new EventEmitter<FlowCompletedEvent>();
+@Output() flowCompleted = new EventEmitter<void>();
 @Output() flowError = new EventEmitter<object>();
-@Output() flowDisplayed = new EventEmitter<any>();
+@Output() flowDisplayed = new EventEmitter<void>();
 @Output() flowStateChange = new EventEmitter<object>();
+@Output() flowExit = new EventEmitter<void>();
 ```
 
 ## Publishing

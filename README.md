@@ -1,3 +1,4 @@
+# Please contact us before using this library.
 # Berbix Angular SDK
 
 This Berbix Angular library provides simple interfaces to interact with the Berbix Verify flow.

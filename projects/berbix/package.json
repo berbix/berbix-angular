@@ -2,7 +2,7 @@
   "name": "berbix-angular",
   "version": "0.0.8",
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0"
+    "@angular/common": "^8.0.0 || ^11.0.0",
+    "@angular/core": "^8.0.0 || ^11.0.0"
   }
 }
